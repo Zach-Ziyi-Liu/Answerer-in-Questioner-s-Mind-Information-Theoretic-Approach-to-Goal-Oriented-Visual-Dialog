@@ -45,7 +45,7 @@ python -m http.server 8000
 
 ## Modification based on reference code 
 
-Combined with SL and RL modules, the $Q$-sampler samples the candidate question set from the output distribution of the RNN-based question-generator, $p(q_t|h_{t-1})$, using a beam search during every round. In order to approximate the information gain of each question, $A_t$ is sampled from the approximated answer-generator network as several generated answers, while $C_t$ is sampled from class posterior as several posterior test images.
+Combined with SL and RL modules, the `$Q$`-sampler samples the candidate question set from the output distribution of the RNN-based question-generator, `$p(q_t|h_{t-1})$`, using a beam search during every round. In order to approximate the information gain of each question, `$A_t$` is sampled from the approximated answer-generator network as several generated answers, while `$C_t$` is sampled from class posterior as several posterior test images.
 We also apply an encoder module to understand the facts of input image features and related captions as well as past dialogues and convert them into hidden states and output vectors. Then we refer to the concept of attention model and give weights to the outputs of LSTM module in the decoder in order to focus more on the useful information.  In this way, we are able to generate the conditional probability distribution of the candidate questioner, which consequently gives the most likely original questions.
 
 ## Acknowlegement
