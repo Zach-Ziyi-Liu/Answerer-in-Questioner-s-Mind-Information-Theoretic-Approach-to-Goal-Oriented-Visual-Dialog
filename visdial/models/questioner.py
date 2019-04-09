@@ -5,7 +5,7 @@ import visdial.models.encoders.hre as hre_enc
 import visdial.models.decoders.gen as gen_dec
 from utils import utilities as utils
 
-
+##Update questioner based on decoder with attention mechanism  
 class Questioner(Agent):
     def __init__(self, encoderParam, decoderParam, imgFeatureSize=0,
                  verbose=1):
