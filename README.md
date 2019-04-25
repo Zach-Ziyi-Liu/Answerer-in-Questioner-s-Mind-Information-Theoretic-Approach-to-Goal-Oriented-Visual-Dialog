@@ -31,10 +31,10 @@ python train.py -useGPU -trainMode sl-qbot -qstartFrom qbot_sl_ep60.vd -numEpoch
 ```
 
 ## Evaluation
-Here provided are the commands to evaluate models of AQM [Das & Kottur et al., 2017].
+Here provided are the commands to evaluate models 
 
 ```
-!python evaluate.py -useGPU -expLowerLimit 33 -expUpperLimit 38 -evalMode AQMBotRank -startFrom abot_trained_60.vd -aqmQStartFrom qbot_sl_ep60.vd -aqmAStartFrom abot_sl_ep60.vd
+!python evaluate.py -useGPU -expLowerLimit 0 -expUpperLimit 500 -evalMode AQMBotRank -startFrom abot_ep_15.vd -aqmQStartFrom qbot_ep_15.vd -aqmAStartFrom abot_ep_15.vd
 ```
 (Result.json generated)
 
