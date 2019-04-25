@@ -16,7 +16,7 @@ class Questioner(Agent):
             history) and a decoder network for generating a response (question).
         '''
         super(Questioner, self).__init__()
-        self.encType = encoderParam['type']
+        self.encType =encoderParam['type']
         self.decType = decoderParam['type']
         self.dropout = encoderParam['dropout']
         self.rnnHiddenSize = encoderParam['rnnHiddenSize']
@@ -83,15 +83,21 @@ class Questioner(Agent):
         likelihood under the current decoder RNN state.
         '''
         
-        ###### Change here : Attention model??
+        ## Attention model
         encStates = self.encoder()
         enc_outputs = self.encoder.return_output()
-#         print("encstates:\n",encStates,'\n',len(encStates),encStates[0].shape,encStates[1].shape)
+
         if len(self.questions) == 0:
             raise Exception('Must provide question if not sampling one.')
         decIn = self.questions[-1]
         
-        logProbs = self.decoder(encStates, inputSeq=decIn, enc_outputs = enc_outputs, Questioner = True )
+##  Attention = True --> Add attention mechanism 
+##  Self = True --> Add self-attention 
+
+        logProbs = self.decoder(encStates, inputSeq=decIn, enc_outputs = enc_outputs, Attention = True )
+#      logProbs = self.decoder(encStates, inputSeq=decIn, enc_outputs = enc_outputs, Self = True )
+
+
         return logProbs
 
     def forwardDecode(self, inference='sample', beamSize=1, maxSeqLen=20, topk=1, retLogProbs=False, gamma=0, delta=0):
@@ -112,6 +118,7 @@ class Questioner(Agent):
         '''
         assert topk <= beamSize
         encStates = self.encoder()
+        enc_outputs = self.encoder.return_output()
         return self.decoder.forwardDecode(
                         encStates,
                         maxSeqLen=maxSeqLen,
@@ -120,7 +127,7 @@ class Questioner(Agent):
                         topk=topk,
                         retLogProbs=retLogProbs,
                         gamma=gamma,
-                        delta=delta)
+                        delta=delta,enc_outputs = enc_outputs,att = True)
 
     def predictImage(self):
         '''

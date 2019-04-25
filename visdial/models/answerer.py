@@ -131,6 +131,7 @@ class Answerer(Agent):
         likelihood under the current decoder RNN state.
         '''
         encStates = self.encoder(debug=debug)
+        enc_outputs = self.encoder.return_output()
         if len(self.answers) > 0:
             decIn = self.answers[-1]
         elif self.caption is not None:
@@ -138,7 +139,10 @@ class Answerer(Agent):
         else:
             raise Exception('Must provide an input sequence')
 
-        logProbs = self.decoder(encStates, inputSeq=decIn)
+##  Attention = True --> Add attention mechanism 
+##  Self = True --> Add self-attention 
+        logProbs = self.decoder(encStates, inputSeq=decIn, enc_outputs = enc_outputs, Attention = True )
+#      logProbs = self.decoder(encStates, inputSeq=decIn, enc_outputs = enc_outputs, Self = True )
         return logProbs
 
     def forwardDecode(self, inference='sample', beamSize=1, maxSeqLen=20, topk=1, retLogProbs=False):
@@ -156,13 +160,14 @@ class Answerer(Agent):
             maxSeqLen : Maximum length of token sequence to generate
         '''
         encStates = self.encoder()
+        enc_outputs = self.encoder.return_output()
         return self.decoder.forwardDecode(
             encStates,
             maxSeqLen=maxSeqLen,
             inference=inference,
             beamSize=beamSize,
             topk=topk,
-            retLogProbs=retLogProbs)
+            retLogProbs=retLogProbs, enc_outputs = enc_outputs, att = True)
 
     def evalOptions(self, options, optionLens, scoringFunction):
         '''

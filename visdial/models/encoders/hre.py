@@ -80,6 +80,7 @@ class Encoder(nn.Module):
 
         # dialog rnn
         self.dialogRNN = nn.LSTMCell(dialogInputSize, self.rnnHiddenSize)
+#         self.dialogRNN0 = nn.LSTM(dialogInputSize, self.rnnHiddenSize)
         # A global counter for save and read
         # self.captionEmbedded = False
         self.firstForwarded = False
@@ -110,6 +111,7 @@ class Encoder(nn.Module):
         self.questionRNNStates = []
         self.dialogRNNInputs = []
         self.dialogHiddens = []
+        self.dialHid = []
         # self.captionEmbedded = False
         self.firstForwarded = False
         self.isLoaded = False
@@ -259,12 +261,13 @@ class Encoder(nn.Module):
         inptIdx = dialogIdx if not self.isLoaded else dialogIdx - 1
         inpt = self.dialogRNNInputs[inptIdx]
         hNew = self.dialogRNN(inpt, hPrev)
+#         hout, hhid = self.dialogRNN0(inpt, hPrev)
         if debug:
             print('dialogInput', inpt)
             print('dialogHiddens', hPrev)
             print('hNew', hNew)
         self.dialogHiddens.append(hNew)
-
+#         self.dialHid.append((hout,hhid))
     def exportParam(self):
         '''
         Arugment:
@@ -502,5 +505,9 @@ class Encoder(nn.Module):
         return H_link, C_link
     
     def return_output(self):
-        return self.factEmbeds[0][0]
+        if self.isAnswerer:
+               return self.questionRNNStates[-1][0]
+        else:
+               return self.factEmbeds[-1][0]
+
       
