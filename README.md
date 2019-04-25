@@ -33,7 +33,7 @@ python train.py -useGPU -trainMode sl-qbot -qstartFrom qbot_sl_ep60.vd -numEpoch
 change trainMode to train sl-abot or sl-qbot
 
 ## Evaluation
-### Here provided are the commands to evaluate models 
+
 
 Evalution via PMR
 ```
