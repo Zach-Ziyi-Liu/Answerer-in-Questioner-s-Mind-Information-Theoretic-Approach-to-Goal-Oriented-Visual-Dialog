@@ -26,22 +26,31 @@ AQM basically uses the same training schemes as suggested in [Das & Kottur et al
 
 Random seed can be set using `-randomSeed <seed>`.
 
+
 ```
 python train.py -useGPU -trainMode sl-qbot -qstartFrom qbot_sl_ep60.vd -numEpochs 20
 ```
+change trainMode to train sl-abot or sl-qbot
 
 ## Evaluation
 Here provided are the commands to evaluate models 
 
+Evalution via PMR
 ```
-!python evaluate.py -useGPU -expLowerLimit 0 -expUpperLimit 500 -evalMode AQMBotRank -startFrom abot_ep_15.vd -aqmQStartFrom qbot_ep_15.vd -aqmAStartFrom abot_ep_15.vd
+python evaluate.py -useGPU -expLowerLimit 0 -expUpperLimit 500 -evalMode AQMBotRank -startFrom abot_ep_15.vd -aqmQStartFrom qbot_ep_15.vd -aqmAStartFrom abot_ep_15.vd
 ```
+Evalution via dialogues
+```
+python evaluate.py -useGPU -expLowerLimit 0 -expUpperLimit 500 -evalMode AQMdialog -startFrom abot_ep_15.vd -aqmQStartFrom qbot_ep_15.vd -aqmAStartFrom abot_ep_15.vd
+```
+
 (Result.json generated)
 
 ```
 python -m http.server 8000
 ```
 (Visualize .json file in the browser)
+
 
 ## Modification based on reference code 
 
